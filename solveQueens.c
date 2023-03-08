@@ -7,8 +7,8 @@
 #include "solveQueens.h"
 
 bool solveNQueens(int n, int m, Board* board) {
-    if (board == NULL || n > m){
-        printf("Allocating memory for board failed or the number of queens exceeds the number of rows.\n");
+    if (board == NULL){
+        printf("Allocating memory for the board failed.\n");
         return false;
     }
 
@@ -27,10 +27,17 @@ bool solveNQueens(int n, int m, Board* board) {
         }
     }
 
+    if (n > m){
+        printf("The number of queens exceeds the number of rows.\n");
+        return false;
+    }
+
     for (int i = 0; i < m; ++i) {
         for (int j = 0; j < m; ++j) {
             board->state[i][j] = 'o';
         }
+        board->col[i] = false;
+        board->diagonal[i] = false;
     }
 
     if (backtrack(0, n, m, board))
@@ -91,22 +98,14 @@ void printBoard(int m, Board* board){
 }
 
 void freeBoard(int m, Board* board){
-    if (board == NULL)
-        return;
+    free(board->col);
 
-    if(board->col != NULL)
-        free(board->col);
+    free(board->diagonal);
 
-    if(board->diagonal != NULL)
-        free(board->diagonal);
-
-    if(board->state != NULL){
-        for (int i = 0; i < m; ++i) {
-            if(board->state[i] != NULL)
-                free(board->state[i]);
-        }
-        free(board->state);
+    for (int i = 0; i < m; ++i) {
+        free(board->state[i]);
     }
+    free(board->state);
 
     free(board);
 }
