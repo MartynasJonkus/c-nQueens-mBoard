@@ -1,4 +1,4 @@
-# n-Queens on an m-triangle chess board
+# n-Queens on an m-size triangle chess board
 If possible finds a solution to place an n amount of queens on an m sized triangle chessboard,  
   so the queens cannot attack each other  
   
